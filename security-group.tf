@@ -17,6 +17,15 @@ resource "aws_security_group" "acesso-php" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  
+  egress {
+    description = "acesso-internet"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
   tags = {
     Name = "acesso-php"
   }
@@ -35,12 +44,4 @@ resource "aws_security_group" "acesso-dbphp" {
     cidr_blocks = ["172.40.0.0/24"]
   }
 
-}
-
-resource "aws_db_security_group" "acesso-rds" {
-  name = "acesso-rds"
-
-  ingress {
-    cidr = "172.40.0.0/24"
-  }
 }

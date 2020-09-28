@@ -19,6 +19,7 @@ resource "aws_vpc_ipv4_cidr_block_association" "secondary_cidr" {
 resource "aws_subnet" "subnet-php2" {
   vpc_id     = aws_vpc_ipv4_cidr_block_association.secondary_cidr.vpc_id
   cidr_block = "172.41.0.0/24"
+  map_public_ip_on_launch = true
   availability_zone = "us-east-2c"
 }
 
@@ -36,17 +37,7 @@ resource "aws_internet_gateway" "gw-php" {
 resource "aws_route_table" "route-php" {
   vpc_id = aws_vpc.vpc-php.id
 
- /* route {
-    cidr_block = "172.40.0.0/24"
-    
-  }
-
-  route {
-    cidr_block = "172.41.0.0/24"
-    
-  }*/
-
-  route {
+   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.gw-php.id
   }
